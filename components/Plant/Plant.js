@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icons from 'react-native-vector-icons/FontAwesome';
 
-const Plant = (props) => {
+export const Plant = (props) => {
 
   return (
     <View style={styles.item}>
@@ -25,7 +25,7 @@ const Plant = (props) => {
 
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: '#b0ffd0',
+    backgroundColor: '#dcfcec',
     padding: 25,
     borderRadius: 10,
     flexDirection: 'row',

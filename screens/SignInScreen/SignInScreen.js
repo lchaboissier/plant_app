@@ -5,7 +5,7 @@ import Logo from '../../assets/icon.png'
 import CustomButton from '../../components/CustomButton/CustomButton';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import { useNavigation } from '@react-navigation/core';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 const SignInScreen = () => {
     // const [username, setUsername] = useState('');
@@ -31,7 +31,7 @@ const SignInScreen = () => {
     };
 
     return (
-        <ScrollView style={{backgroundColor: "#b0ffd0"}} showsVerticalScrollIndicator={false}>
+        <ScrollView style={{backgroundColor: "#dcfcec"}} showsVerticalScrollIndicator={false}>
             <View style={styles.root}>
                 <Image 
                     source={Logo} 
@@ -39,11 +39,12 @@ const SignInScreen = () => {
                     resizeMode="contain" 
                 />
 
-                <Text style={styles.title}>Créer un compte</Text>
+                <Text style={styles.title}>Connexion</Text>
                 <CustomInput
                     name="username"
                     placeholder="Nom d'utilisateur"
                     // value={username}
+                    style={styles.montserratFont}
                     control={control}
                     rules={{required: "Le nom d'utilisateur est obligatoire."}}
                 />
@@ -82,6 +83,9 @@ const styles = StyleSheet.create({
         color: '#7cb89e',
         margin: 10,
     },
+    montserratFont: {
+        fontFamily: 'Montserrat-Regular',
+    }
 });
 
 export default SignInScreen

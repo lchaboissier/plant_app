@@ -40,7 +40,7 @@ const SignUpScreen = () => {
     };
 
     return (
-        <ScrollView style={{backgroundColor: "#b0ffd0"}} showsVerticalScrollIndicator={false}>
+        <ScrollView style={{backgroundColor: "#dcfcec"}} showsVerticalScrollIndicator={false}>
             <View style={styles.root}>
                 <Text style={styles.title}>Créer un compte</Text>
 
