@@ -1,13 +1,13 @@
 // import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+// import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Plant } from '../../components/Plant/Plant';
+import { Help } from '../../components/Help/Help';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Icons from 'react-native-vector-icons/FontAwesome';
 // import Icons from 'react-native-vector-icons/FontAwesome';
-import { MenuContext, Menu, MenuOptions, MenuOption, MenuTrigger, MenuProvider } from 'react-native-popup-menu';
+// import { MenuContext, Menu, MenuOptions, MenuOption, MenuTrigger, MenuProvider } from 'react-native-popup-menu';
 
 // import SignInScreen from './screens/AuthenticationScreen/SignInScreen';
 // import { useNavigation } from '@react-navigation/core';
@@ -22,68 +22,85 @@ const HomeScreen = () => {
               tabBarIcon: ({focused, color, size}) => {
                 let iconName;
 
-                if (route.name == "Home") {
+                if (route.name == "HomePage") {
                     iconName = "home"
-                } else if (route.name == "Settings") {
-                    iconName = "settings"
+                } else if (route.name == "HelpPage") {
+                    iconName = "help"
                 }
 
                 return <Ionicons name={iconName} size={25} />
               }
           })}
         >
-            <tab.Screen style={{fontFamily: 'Montserrat-Regular', color: '#b0ffd0'}} name='Home' component={Home} />
-            <tab.Screen style={{fontFamily: 'Montserrat-Regular', color: '#b0ffd0'}} name='Settings' component={Settings} /> 
+            <tab.Screen style={{fontFamily: 'Montserrat', color: '#b0ffd0'}} name='HomePage' component={HomePage} />
+            <tab.Screen style={{fontFamily: 'Montserrat', color: '#b0ffd0'}} name='HelpPage' component={HelpPage} /> 
         </tab.Navigator>
     );
 }
 
-  function Home() {
+  function HomePage() {
     return (
       <View style={styles.container}>  
       <Text style={{marginLeft:16, marginTop:16, fontSize: 18}}>Liste des plantes</Text>
       <ScrollView style={{width:'100%'}}>
-      <View style={styles.box}>
-
-          <Plant style={{fontFamily: 'Montserrat-Regular'}} text={'Title'} subText={'Subtitle'} />
-      </View>
+        <View style={styles.box}>
+            <Plant style={{fontFamily: 'Montserrat'}} 
+              title={'Title'} 
+              subtitle={'Subtitle'} 
+              temperature={5} 
+              luminosity={5} 
+              humidity={5}
+              icon={require('../../assets/icon.png')} 
+              iconSize={48} />
+        </View>
       </ScrollView>
       </View>
     );
-}
-
-
-    function Settings() {
-    return (
-        <View style={styles.container}>
-          <Text style={{marginLeft:16, marginTop:16, fontSize: 18}}>Paramètres</Text>
-          <View style={{ flexDirection: 'row'}}>
-            <Text>Help 1</Text>
-            <Icons name='chevron-right'></Icons>
-          </View>
-        </View>
-    );
-
-    
-
 };
 
 
+    function HelpPage() {
+    return (
+      <View style={styles.container}>
+      <Text style={{marginLeft:16, marginTop:16, fontSize: 18}}>Problèmes courants</Text>
+        <ScrollView>
+          <View style={styles.box}>
+            <Help title="Aide 1" />
+            <Help title="Aide 2" />
+            <Help title="Aide 3" />
+            <Help title="Aide 4" />
+            <Help title="Aide 5" />
+            <Help title="Aide 6" />
+          </View>
+        </ScrollView>
+      </View>
+    );
+};
 
 const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 24,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontFamily: 'Montserrat'
   },
   
   container: {
       flex: 1,
-      backgroundColor: '#ffffff'
+      backgroundColor: '#ffffff',
+      fontFamily: 'Montserrat'
     },
     box: {
       width: '100%',
       height: '100%',
       padding: 25,
+      fontFamily: 'Montserrat',
+    },
+    item: {
+      fontSize: 22,
+      backgroundColor: "#55ff9a",
+      marginTop: 20,
+      padding: 20,
+      fontFamily: 'Montserrat'
     },
 });
   

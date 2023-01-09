@@ -6,10 +6,15 @@ import CustomButton from '../../components/CustomButton/CustomButton';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import { useNavigation } from '@react-navigation/core';
 import { useForm } from 'react-hook-form';
+import { useFonts } from 'expo-font';
 
 const SignInScreen = () => {
     // const [username, setUsername] = useState('');
     // const [password, setPassword] = useState('');
+
+    let [fontsLoaded] = useFonts({
+        'Montserrat': require('../../assets/fonts/Montserrat-Regular.ttf'),
+      });
 
     const {height} = useWindowDimensions();
     const navigation = useNavigation();
@@ -29,9 +34,11 @@ const SignInScreen = () => {
     const onSignUpPress = () => {
         navigation.navigate('SignUp');
     };
-
+    if (!fontsLoaded) {
+        return <Text>Loading...</Text>;
+    } else {
     return (
-        <ScrollView style={{backgroundColor: "#dcfcec"}} showsVerticalScrollIndicator={false}>
+        <ScrollView style={{backgroundColor: "#b0ffd0"}} showsVerticalScrollIndicator={false}>
             <View style={styles.root}>
                 <Image 
                     source={Logo} 
@@ -44,7 +51,7 @@ const SignInScreen = () => {
                     name="username"
                     placeholder="Nom d'utilisateur"
                     // value={username}
-                    style={styles.montserratFont}
+                    style={{ fontFamily: "Montserrat"}}
                     control={control}
                     rules={{required: "Le nom d'utilisateur est obligatoire."}}
                 />
@@ -53,18 +60,20 @@ const SignInScreen = () => {
                     placeholder="Mot de passe"
                     // value={password}
                     secureTextEntry
+                    style={{ fontFamily: "Montserrat"}}
                     control={control}
                     rules={{required: "Le mot de passe est obligatoire.", minLength: {value: 3, message: "Le mot de passe doit contenir au moins 3 caractères."}}}
                 />
 
-                <CustomButton text="Se connecter" onPress={handleSubmit(onSignInPressed)} />
+                <CustomButton text="Se connecter" style={styles.button} onPress={handleSubmit(onSignInPressed)} />
 
-                <CustomButton text="Mot de passe oublié ?" onPress={onForgotPasswordPressed} type="info" />
+                <CustomButton text="Mot de passe oublié ?" style={styles.button} onPress={onForgotPasswordPressed} type="info" />
 
-                <CustomButton text="Pas encore de compte ? Créez-en un." onPress={onSignUpPress} type="info" />
+                <CustomButton text="Pas encore de compte ? Créez-en un." style={styles.button} onPress={onSignUpPress} type="info" />
             </View>
         </ScrollView>
     );
+    }
 };
 
 const styles = StyleSheet.create({
@@ -82,9 +91,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#7cb89e',
         margin: 10,
+        fontFamily: 'Montserrat',
     },
-    montserratFont: {
-        fontFamily: 'Montserrat-Regular',
+    button: {
+        fontFamily: 'Montserrat',
     }
 });
 

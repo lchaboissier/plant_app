@@ -22,7 +22,10 @@
     "react-native": "0.70.5",
     "react-native-ionicons": "^4.6.5",
     "react-native-popup-menu": "^0.16.1",
-    "react-native-vector-icons": "^9.2.0"
+    "react-native-vector-icons": "^9.2.0",
+    "react-native-web": "~0.18.9",
+    "react-dom": "18.1.0",
+    "@expo/webpack-config": "^0.17.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

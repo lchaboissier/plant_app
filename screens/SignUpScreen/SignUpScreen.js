@@ -40,7 +40,7 @@ const SignUpScreen = () => {
     };
 
     return (
-        <ScrollView style={{backgroundColor: "#dcfcec"}} showsVerticalScrollIndicator={false}>
+        <ScrollView style={{backgroundColor: "#b0ffd0"}} showsVerticalScrollIndicator={false}>
             <View style={styles.root}>
                 <Text style={styles.title}>Créer un compte</Text>
 
@@ -106,19 +106,23 @@ const styles = StyleSheet.create({
     root: {
         alignItems: 'center',
         padding: 20,
+        fontFamily: 'Montserrat',
     },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
         color: '#7cb89e',
         margin: 10,
+        fontFamily: 'Montserrat',
     },
     text: {
         color: 'gray',
         marginVertical: 10,
+        fontFamily: 'Montserrat',
     },
     link: {
-        color: '#7cb89e'
+        color: '#7cb89e',
+        fontFamily: 'Montserrat',
     },
 });
 
