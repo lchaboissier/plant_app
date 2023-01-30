@@ -6,7 +6,7 @@ export const Plant = ({ title, subtitle, temperature, humidity, luminosity }) =>
   const [showMore, setShowMore] = useState(false);
 
   return (
-<TouchableOpacity style={styles.fieldContainer} onPress={() => { /* Naviguer vers la page de détails */ }}>
+    <TouchableOpacity style={styles.fieldContainer} onPress={() => { /* Naviguer vers la page de détails */ }}>
       <View>
         <Text style={styles.titleText}>{title}</Text>
         <Text style={styles.subtitleText}>{subtitle}</Text>
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginRight: 8,
   },
-  
+
 });
 
 export default Plant;

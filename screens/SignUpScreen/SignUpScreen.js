@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import CustomButton from '../../components/CustomButton/CustomButton';
 import CustomInput from '../../components/CustomInput/CustomInput';
@@ -13,7 +13,7 @@ const SignUpScreen = () => {
     // const [password, setPassword] = useState('');
     // const [passwordRepeat, setPasswordRepeat] = useState('');
 
-    const {control, handleSubmit, watch} = useForm({
+    const { control, handleSubmit, watch } = useForm({
         defaultValues: {
             username: 'Test',
         },
@@ -40,7 +40,7 @@ const SignUpScreen = () => {
     };
 
     return (
-        <ScrollView style={{backgroundColor: "#b0ffd0"}} showsVerticalScrollIndicator={false}>
+        <ScrollView style={{ backgroundColor: "#b0ffd0" }} showsVerticalScrollIndicator={false}>
             <View style={styles.root}>
                 <Text style={styles.title}>Créer un compte</Text>
 
@@ -64,7 +64,7 @@ const SignUpScreen = () => {
                     name="email"
                     placeholder="Adresse e-mail"
                     control={control}
-                    rules={{required: "L'adresse électronique est obligatoire.", pattern: {value: EMAIL_REGEX, message: "Vous devez entrer une adresse électronique valide."}}}
+                    rules={{ required: "L'adresse électronique est obligatoire.", pattern: { value: EMAIL_REGEX, message: "Vous devez entrer une adresse électronique valide." } }}
                 />
 
                 <CustomInput

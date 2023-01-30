@@ -1,5 +1,5 @@
 
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { View, Text, Image, StyleSheet, useWindowDimensions, ScrollView } from 'react-native'
 import Logo from '../../assets/icon.png'
 import CustomButton from '../../components/CustomButton/CustomButton';
@@ -14,12 +14,12 @@ const SignInScreen = () => {
 
     let [fontsLoaded] = useFonts({
         'Montserrat': require('../../assets/fonts/Montserrat-Regular.ttf'),
-      });
+    });
 
-    const {height} = useWindowDimensions();
+    const { height } = useWindowDimensions();
     const navigation = useNavigation();
 
-    const { control, handleSubmit, formState: {errors}, } = useForm();
+    const { control, handleSubmit, formState: { errors }, } = useForm();
 
     const onSignInPressed = data => {
         console.log(data);
@@ -37,42 +37,42 @@ const SignInScreen = () => {
     if (!fontsLoaded) {
         return <Text>Loading...</Text>;
     } else {
-    return (
-        <ScrollView style={{backgroundColor: "#b0ffd0"}} showsVerticalScrollIndicator={false}>
-            <View style={styles.root}>
-                <Image 
-                    source={Logo} 
-                    style={[styles.logo, {height: height * 0.3}]} 
-                    resizeMode="contain" 
-                />
+        return (
+            <ScrollView style={{ backgroundColor: "#b0ffd0" }} showsVerticalScrollIndicator={false}>
+                <View style={styles.root}>
+                    <Image
+                        source={Logo}
+                        style={[styles.logo, { height: height * 0.3 }]}
+                        resizeMode="contain"
+                    />
 
-                <Text style={styles.title}>Connexion</Text>
-                <CustomInput
-                    name="username"
-                    placeholder="Nom d'utilisateur"
-                    // value={username}
-                    style={{ fontFamily: "Montserrat"}}
-                    control={control}
-                    rules={{required: "Le nom d'utilisateur est obligatoire."}}
-                />
-                <CustomInput
-                    name="password"
-                    placeholder="Mot de passe"
-                    // value={password}
-                    secureTextEntry
-                    style={{ fontFamily: "Montserrat"}}
-                    control={control}
-                    rules={{required: "Le mot de passe est obligatoire.", minLength: {value: 3, message: "Le mot de passe doit contenir au moins 3 caractères."}}}
-                />
+                    <Text style={styles.title}>Connexion</Text>
+                    <CustomInput
+                        name="username"
+                        placeholder="Nom d'utilisateur"
+                        // value={username}
+                        style={{ fontFamily: "Montserrat" }}
+                        control={control}
+                        rules={{ required: "Le nom d'utilisateur est obligatoire." }}
+                    />
+                    <CustomInput
+                        name="password"
+                        placeholder="Mot de passe"
+                        // value={password}
+                        secureTextEntry
+                        style={{ fontFamily: "Montserrat" }}
+                        control={control}
+                        rules={{ required: "Le mot de passe est obligatoire.", minLength: { value: 3, message: "Le mot de passe doit contenir au moins 3 caractères." } }}
+                    />
 
-                <CustomButton text="Se connecter" style={styles.button} onPress={handleSubmit(onSignInPressed)} />
+                    <CustomButton text="Se connecter" style={styles.button} onPress={handleSubmit(onSignInPressed)} />
 
-                <CustomButton text="Mot de passe oublié ?" style={styles.button} onPress={onForgotPasswordPressed} type="info" />
+                    <CustomButton text="Mot de passe oublié ?" style={styles.button} onPress={onForgotPasswordPressed} type="info" />
 
-                <CustomButton text="Pas encore de compte ? Créez-en un." style={styles.button} onPress={onSignUpPress} type="info" />
-            </View>
-        </ScrollView>
-    );
+                    <CustomButton text="Pas encore de compte ? Créez-en un." style={styles.button} onPress={onSignUpPress} type="info" />
+                </View>
+            </ScrollView>
+        );
     }
 };
 
