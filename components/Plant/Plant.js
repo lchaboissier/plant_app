@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 export const Plant = ({ title, subtitle, temperature, humidity, luminosity }) => {
+
+  const navigation = useNavigation();
+
+  const onPlantInfoPress = () => {
+    navigation.navigate('PlantInfo');
+  };
+
   const [showMore, setShowMore] = useState(false);
 
   return (
-    <TouchableOpacity style={styles.fieldContainer} onPress={() => { /* Naviguer vers la page de détails */ }}>
+    <TouchableOpacity style={styles.fieldContainer} onPress={(onPlantInfoPress)}>
       <View>
         <Text style={styles.titleText}>{title}</Text>
         <Text style={styles.subtitleText}>{subtitle}</Text>
@@ -18,6 +26,16 @@ export const Plant = ({ title, subtitle, temperature, humidity, luminosity }) =>
       </View>
       <Ionicons name="ios-arrow-forward" size={24} color="#000" />
     </TouchableOpacity>
+    // <TouchableOpacity onPress={(onPlantInfoPress)}>
+    //   <View>
+    //     <Text style={styles.titleText}>{title}</Text>
+    //     <Text style={styles.subtitleText}>{subtitle}</Text>
+    //     <Text style={styles.valueText}>{temperature}°C</Text>
+    //     <Text style={styles.valueText}>{luminosity} lux</Text>
+    //     <Text style={styles.valueText}>{humidity}%</Text>
+    //   </View>
+    // </TouchableOpacity>
+
   );
 };
 

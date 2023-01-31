@@ -4,7 +4,7 @@ import { View, Text, Image, StyleSheet, useWindowDimensions, ScrollView } from '
 import Logo from '../../assets/icon.png'
 import CustomButton from '../../components/CustomButton/CustomButton';
 import CustomInput from '../../components/CustomInput/CustomInput';
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation } from '@react-navigation/native';
 import { useForm } from 'react-hook-form';
 import { useFonts } from 'expo-font';
 
@@ -80,11 +80,13 @@ const styles = StyleSheet.create({
     root: {
         alignItems: 'center',
         padding: 20,
+        fontFamily: 'Montserrat',
     },
     logo: {
         width: '70%',
         maxWidth: 300,
         maxHeight: 100,
+        fontFamily: 'Montserrat',
     },
     title: {
         fontSize: 24,
