@@ -31,21 +31,25 @@ const styles = StyleSheet.create({
 
         alignItems: 'center',
         borderRadius: 5,
+        fontFamily: 'Montserrat'
     },
     text: {
         fontWeight: 'bold',
         color: 'white',
+        fontFamily: 'Montserrat'
     },
 
     container_primary: {
         backgroundColor: '#7cb89e',
+        fontFamily: 'Montserrat'
     },
     container_info: {
-
+        fontFamily: 'Montserrat'
     },
 
     text_info: {
-        color: 'gray'
+        color: 'gray',
+        fontFamily: 'Montserrat'
     }
 })
 

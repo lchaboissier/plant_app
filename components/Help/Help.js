@@ -31,10 +31,12 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
+    fontFamily: 'Montserrat'
   },
   title: {
     fontSize: 16,
     flex: 1,
+    fontFamily: 'Montserrat'
   },
 });
 

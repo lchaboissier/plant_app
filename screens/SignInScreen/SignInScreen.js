@@ -1,16 +1,57 @@
 
-import React, { useState } from 'react'
-import { View, Text, Image, StyleSheet, useWindowDimensions, ScrollView } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, Text, TextInput, Image, StyleSheet, useWindowDimensions, ScrollView, Alert } from 'react-native'
 import Logo from '../../assets/icon.png'
 import CustomButton from '../../components/CustomButton/CustomButton';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import { useNavigation } from '@react-navigation/native';
 import { useForm } from 'react-hook-form';
 import { useFonts } from 'expo-font';
+import { auth } from '../../firebase';
 
 const SignInScreen = () => {
-    // const [username, setUsername] = useState('');
-    // const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSignUp = () => {
+        auth
+            .createUserWithEmailAndPassword(email, password)
+            .then(userCredentials => {
+                const user = userCredentials.user;
+                console.log(user.email);
+            })
+            .catch(error => alert(error.message))
+    }
+
+    const handleLogin = () => {
+        auth
+            .signInWithEmailAndPassword(email, password)
+            .then(userCredentials => {
+                const user = userCredentials.user;
+                console.log('Connecté en tant que : ', user.email);
+            })
+            .catch(error => {
+                if (error.code == "auth/email-already-in-use") {
+                    Alert.alert("Erreur", "L'adresse email a déjà été utilisé.");
+                } else if (error.code == "auth/invalid-email") {
+                    Alert.alert("Erreur", "Veuillez entrer une adresse email et un mot de passe valide.");
+                } else if (error.code == "auth/operation-not-allowed") {
+                    Alert.alert("Erreur", "Opération non autorisé.");
+                } else if (error.code == "auth/weak-password") {
+                    Alert.alert("Erreur", "Le mot de passe est trop faible.");
+                }
+            })
+    }
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(user => {
+            if (user) {
+                navigation.navigate('Home')
+            }
+        })
+ 
+        return unsubscribe
+    }, [])
 
     let [fontsLoaded] = useFonts({
         'Montserrat': require('../../assets/fonts/Montserrat-Regular.ttf'),
@@ -47,25 +88,27 @@ const SignInScreen = () => {
                     />
 
                     <Text style={styles.title}>Connexion</Text>
-                    <CustomInput
-                        name="username"
-                        placeholder="Nom d'utilisateur"
-                        // value={username}
+                    <TextInput
+                        name="email"
+                        placeholder="Adresse Email"
+                        value={email}
                         style={{ fontFamily: "Montserrat" }}
                         control={control}
-                        rules={{ required: "Le nom d'utilisateur est obligatoire." }}
+                        rules={{ required: "L'adresse Email est obligatoire." }}
+                        onChangeText={text => setEmail(text)}
                     />
-                    <CustomInput
+                    <TextInput
                         name="password"
                         placeholder="Mot de passe"
-                        // value={password}
-                        secureTextEntry
+                        value={password}
                         style={{ fontFamily: "Montserrat" }}
                         control={control}
                         rules={{ required: "Le mot de passe est obligatoire.", minLength: { value: 3, message: "Le mot de passe doit contenir au moins 3 caractères." } }}
+                        onChangeText={text => setPassword(text)}
+                        secureTextEntry
                     />
 
-                    <CustomButton text="Se connecter" style={styles.button} onPress={handleSubmit(onSignInPressed)} />
+                    <CustomButton text="Se connecter" style={styles.button} onPress={handleLogin} />
 
                     <CustomButton text="Mot de passe oublié ?" style={styles.button} onPress={onForgotPasswordPressed} type="info" />
 
