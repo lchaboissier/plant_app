@@ -4,6 +4,8 @@ import { SafeAreaView, StyleSheet, Text } from 'react-native';
 import Navigation from './navigation';
 import { FontFamily } from './assets/util/CommonStyle';
 import { useFonts } from 'expo-font';
+import FlashMessage from "react-native-flash-message";
+
 
 const App = () => {
   let [fontsLoaded] = useFonts({
@@ -15,6 +17,7 @@ const App = () => {
   } else {
     return (
       <SafeAreaView style={styles.root}>
+        <FlashMessage position="top" />
         <Navigation style={{ fontFamily: 'Montserrat' }} />
       </SafeAreaView>
     );

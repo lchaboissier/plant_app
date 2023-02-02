@@ -18,7 +18,7 @@ const HelpPage1 = ({ navigation }) => {
                 <View style={styles.content}>
                     <HelpInfo
                         title={'Helptitle1'}
-                        description={loremIpsum.repeat(7)}
+                        description={loremIpsum.repeat(2)}
                     />
                 </View>
             </View>

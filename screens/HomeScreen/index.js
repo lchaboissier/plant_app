@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, Text, View } from 'react-native';
-// import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Plant } from '../../components/Plant/Plant';
 import { Help, handlePress } from '../../components/Help/Help';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import firebase from "firebase/app";
+import "firebase/auth";
+import { Ionicons } from '@expo/vector-icons';
 // import Icons from 'react-native-vector-icons/FontAwesome';
 // import { MenuContext, Menu, MenuOptions, MenuOption, MenuTrigger, MenuProvider } from 'react-native-popup-menu';
 
 // import SignInScreen from './screens/AuthenticationScreen/SignInScreen';
-// import { useNavigation } from '@react-navigation/native';
 // import Navigation from './navigation';
 
 const tab = createBottomTabNavigator();
+
 
 function LogoutButton({ onPress }) {
   return (
@@ -25,13 +26,27 @@ function LogoutButton({ onPress }) {
 }
 
 const HomeScreen = ({ navigation }) => {
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <LogoutButton onPress={() => alert('Déconnexion effectuée !')} />
-      ),
-    }, [navigation]);
-  })
+  // React.useLayoutEffect(() => {
+  //   navigation.setOptions({
+  //     headerRight: () => (
+  //       <LogoutButton onPress={() => alert('Déconnexion effectuée !')} />
+  //     ),
+  //   }, [navigation]);
+  // })
+  const signOut = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        // L'utilisateur a été déconnecté
+        console.log("Utilisateur déconnecté");
+        navigation.navigate("SignIn");
+      })
+      .catch(error => {
+        // La déconnexion a échoué
+        console.error(error);
+      });
+  };
   return (
     <tab.Navigator
       screenOptions={({ route }) => ({
@@ -56,7 +71,19 @@ const HomeScreen = ({ navigation }) => {
         }
         name='Accueil'
         component={HomePage}
-
+        options={{
+          title: 'Home',
+          headerRight: () => (
+            <TouchableOpacity>
+              <Ionicons
+                name="log-out-outline"
+                size={26}
+                style={{marginRight: 20}}
+                onPress={() => signOut()}
+              />
+            </TouchableOpacity>
+          ),
+        }}
       />
       <tab.Screen style={{ fontFamily: 'Montserrat', color: '#b0ffd0' }} name='Aide' component={HelpPage} />
     </tab.Navigator>
@@ -65,12 +92,31 @@ const HomeScreen = ({ navigation }) => {
 
 
 
-function HomePage() {
+function HomePage({ navigation }) {
+  // const signOut = () => {
+  //   firebase
+  //     .auth()
+  //     .signOut()
+  //     .then(() => {
+  //       // L'utilisateur a été déconnecté
+  //       console.log("Utilisateur déconnecté");
+  //       navigation.navigate("SignIn");
+  //     })
+  //     .catch(error => {
+  //       // La déconnexion a échoué
+  //       console.error(error);
+  //     });
+  // };
   return (
     <View style={styles.container}>
       {/* <Text style={{marginLeft:16, marginTop:16, fontSize: 18}}>Liste des plantes</Text> */}
       <View style={styles.titleContainer}>
         <Text style={styles.titleText}>Liste des plantes</Text>
+        {/* <Button
+          title="Se déconnecter"
+          onPress={() => signOut()}
+          navigation={useNavigation()}
+        /> */}
       </View>
       <ScrollView style={{ width: '100%' }}>
         <View style={styles.box}>
@@ -92,41 +138,17 @@ function HomePage() {
 function HelpPage() {
   const navigation = useNavigation();
 
-  const onHelpPage1Press = () => {
-    <handlePress page={'HelpPage1'} />
-  };
-
-  const onHelpPage2Press = () => {
-    navigation.navigate('HelpPage2');
-  };
-
-  const onHelpPage3Press = () => {
-    navigation.navigate('HelpPage3');
-  };
-
-  const onHelpPage4Press = () => {
-    navigation.navigate('HelpPage4');
-  };
-
-  const onHelpPage5Press = () => {
-    navigation.navigate('HelpPage5');
-  };
-
-  const onHelpPage6Press = () => {
-    navigation.navigate('HelpPage6');
-  };
-
   return (
     <View style={styles.container}>
       <Text style={{ marginLeft: 16, marginTop: 16, fontSize: 18 }}>Problèmes courants</Text>
       <ScrollView>
         <View style={styles.box}>
-          <Help title="Aide 1" nb="1" />
-          <Help title="Aide 2" nb="2" />
-          <Help title="Aide 3" onPress={{ onHelpPage3Press }} />
-          <Help title="Aide 4" onPress={{ onHelpPage4Press }} />
-          <Help title="Aide 5" onPress={{ onHelpPage5Press }} />
-          <Help title="Aide 6" onPress={{ onHelpPage6Press }} />
+          <Help title="Aide 1" screenName={'HelpPage1'} />
+          <Help title="Aide 2" screenName={'HelpPage2'} />
+          <Help title="Aide 3" screenName={'HelpPage3'} />
+          <Help title="Aide 4" screenName={'HelpPage4'} />
+          <Help title="Aide 5" screenName={'HelpPage5'} />
+          <Help title="Aide 6" screenName={'HelpPage6'} />
         </View>
       </ScrollView>
     </View>
@@ -136,8 +158,7 @@ function HelpPage() {
 const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 24,
-    fontWeight: 'bold',
-    fontFamily: 'Montserrat'
+    fontFamily: 'Montserrat-Bold'
   },
   container: {
     flex: 1,

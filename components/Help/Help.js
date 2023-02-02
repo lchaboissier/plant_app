@@ -4,11 +4,11 @@ import Icons from 'react-native-vector-icons/FontAwesome';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-export const Help = ({ title }) => {
+export const Help = ({ screenName, title }) => {
   const navigation = useNavigation();
 
   const handlePress = () => {
-    navigation.navigate('HelpPage1');
+    navigation.navigate(screenName);
   };
 
   return (

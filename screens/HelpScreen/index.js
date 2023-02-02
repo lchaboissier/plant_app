@@ -32,16 +32,10 @@ const HelpScreen = ({ navigation }) => {
       <Text style={{ marginLeft: 16, marginTop: 16, fontSize: 18 }}>Problèmes courants</Text>
       <ScrollView>
         <View style={styles.box}>
-          {/* <Help title="Aide 1" onPress={{onHelpPage1Press}} />
-          <Help title="Aide 2" onPress={{onHelpPage2Press}} />
-          <Help title="Aide 3" onPress={{onHelpPage3Press}} />
-          <Help title="Aide 4" onPress={{onHelpPage4Press}} />
-          <Help title="Aide 5" onPress={{onHelpPage5Press}} />
-          <Help title="Aide 6" onPress={{onHelpPage6Press}} /> */}
           <TouchableOpacity onPress={onPress}>
             <View style={styles.container}>
               <Text style={styles.title}>{title}</Text>
-              <Ionicons name="ios-arrow-forward" size={24} color="#333" />
+              <Ionicons name="ios-arrow-forward" size={48} color="#333" />
             </View>
             <View style={styles.separator} />
           </TouchableOpacity>

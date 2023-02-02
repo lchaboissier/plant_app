@@ -1,17 +1,16 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, ScrollView } from 'react-native'
-import CustomButton from '../../components/CustomButton/CustomButton';
-import CustomInput from '../../components/CustomInput/CustomInput';
+import { View, Text, TextInput, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { useForm } from 'react-hook-form';
+import { auth } from '../../firebase';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 const SignUpScreen = () => {
-    // const [username, setUsername] = useState('');
-    // const [email, setEmail] = useState('');
-    // const [password, setPassword] = useState('');
-    // const [passwordRepeat, setPasswordRepeat] = useState('');
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordRepeat, setPasswordRepeat] = useState('');
 
     const { control, handleSubmit, watch } = useForm({
         defaultValues: {
@@ -21,6 +20,19 @@ const SignUpScreen = () => {
     const pwd = watch('password');
     const navigation = useNavigation();
 
+    function forSignUp({ navigation }) {
+        const handleSignUp = () => {
+            auth
+                .createUserWithEmailAndPassword(email, password)
+                .then(userCredentials => {
+                    const user = userCredentials.user;
+                    console.log('Le compte', user.email, 'a bien été créé !');
+                    navigation.navigate("SignIn");
+                })
+                .catch(error => alert(error.message))
+        }
+    }
+
     const onTermsOfUsePressed = () => {
         console.warn('onTermsOfUsePressed');
     };
@@ -28,12 +40,6 @@ const SignUpScreen = () => {
     const onPrivacyPressed = () => {
         console.warn('onPrivacyPressed');
     }
-
-    // const {height} = useWindowDimensions();
-
-    const onSignUpPressed = () => {
-        console.warn('test signup');
-    };
 
     const onSignInPress = () => {
         navigation.navigate('SignIn');
@@ -44,10 +50,11 @@ const SignUpScreen = () => {
             <View style={styles.root}>
                 <Text style={styles.title}>Créer un compte</Text>
 
-                <CustomInput
+                <TextInput
                     name="username"
                     placeholder="Nom d'utilisateur"
                     control={control}
+                    style={styles.textInput}
                     rules={{
                         required: 'Le nom d\'utilisateur est obligatoire.',
                         minLength: {
@@ -59,18 +66,22 @@ const SignUpScreen = () => {
                             message: 'Le nom d\'utilsiateur ne doit pas excéder 24 caractères.'
                         }
                     }}
+                    onChangeText={text => setUsername(text)}
                 />
-                <CustomInput
+                <TextInput
                     name="email"
                     placeholder="Adresse e-mail"
                     control={control}
+                    style={styles.textInput}
                     rules={{ required: "L'adresse électronique est obligatoire.", pattern: { value: EMAIL_REGEX, message: "Vous devez entrer une adresse électronique valide." } }}
+                    onChangeText={text => setEmail(text)}
                 />
 
-                <CustomInput
+                <TextInput
                     name="password"
                     placeholder="Mot de passe"
                     control={control}
+                    style={styles.textInput}
                     secureTextEntry
                     rules={{
                         required: 'Le mot de passe est obligatoire.',
@@ -79,24 +90,32 @@ const SignUpScreen = () => {
                             message: 'Le mot de passe doit comporter au moins 8 caractères.',
                         }
                     }}
+                    onChangeText={text => setPassword(text)}
                 />
-                <CustomInput
+                <TextInput
                     name="passwordRepeat"
                     placeholder="Retaper le mot de passe"
                     control={control}
+                    style={styles.textInput}
                     // value={passwordRepeat}
                     // setValue={setPasswordRepeat}
                     secureTextEntry
                     rules={{
                         validate: value => value === pwd || 'Le mot de passe ne correspond pas.',
                     }}
+                    onChangeText={text => setPasswordRepeat(text)}
                 />
 
-                <CustomButton text="Créer un compte" onPress={handleSubmit(onSignUpPressed)} />
+                <TouchableOpacity style={styles.buttonStyle} onPress={() => handleSignUp()} navigation={useNavigation()}>
+                    <Text style={styles.buttonStyleText}>Créer un compte</Text>
+                </TouchableOpacity>
+                {/* <CustomButton text="Créer un compte" onPress={handleSignUp} navigation={useNavigation()} /> */}
 
                 <Text style={styles.text}>En vous inscrivant, vous confirmez que vous acceptez nos <Text style={styles.link}>conditions d'utilisation</Text> et notre <Text style={styles.link}>politique de confidentialité</Text>.</Text>
 
-                <CustomButton text="Vous avez déjà un compte ? Cliquez-ici" onPress={onSignInPress} type="info" />
+                <TouchableOpacity title="Vous avez déjà un compte ? Cliquez-ici" style={styles.button} onPress={onSignInPress}>
+                    <Text style={styles.text}>Vous avez déjà un compte ? Cliquez-ici.</Text>
+                </TouchableOpacity>
             </View>
         </ScrollView>
     );
@@ -110,10 +129,10 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 24,
-        fontWeight: 'bold',
         color: '#7cb89e',
         margin: 10,
-        fontFamily: 'Montserrat',
+        marginTop: 40,
+        fontFamily: 'Montserrat-Bold'
     },
     text: {
         color: 'gray',
@@ -123,6 +142,32 @@ const styles = StyleSheet.create({
     link: {
         color: '#7cb89e',
         fontFamily: 'Montserrat',
+    },
+    textInput: {
+        backgroundColor: 'white',
+        width: '100%',
+
+        borderColor: '#e8e8e8',
+        borderWidth: 1,
+        borderRadius: 5,
+
+        paddingHorizontal: 10,
+        marginVertical: 10,
+        fontFamily: 'Montserrat'
+    },
+    buttonStyle: {
+        width: '100%',
+        
+        padding: 15,
+        marginVertical: 5,
+        backgroundColor: '#7cb89e',
+        alignItems: 'center',
+        borderRadius: 5,
+        fontFamily: 'Montserrat'
+    },
+    buttonStyleText: {
+        color: 'white',
+        fontFamily: 'Montserrat-Bold'
     },
 });
 

@@ -25,10 +25,12 @@
     "react-dom": "18.1.0",
     "react-hook-form": "^7.43.0",
     "react-native": "0.70.5",
+    "react-native-flash-message": "^0.4.0",
     "react-native-ionicons": "^4.6.5",
     "react-native-popup-menu": "^0.16.1",
     "react-native-vector-icons": "^9.2.0",
-    "react-native-web": "~0.18.12"
+    "react-native-web": "~0.18.12",
+    "expo-web-browser": "~12.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12"
