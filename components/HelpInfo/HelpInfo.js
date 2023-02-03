@@ -15,7 +15,7 @@ export const HelpInfo = ({ title, description }) => {
                 <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{title}</Text>
                 <View
                     style={{
-                        borderBottomColor: 'black',
+                        borderBottomColor: 'grey',
                         borderBottomWidth: 1,
                         marginVertical: 10,
                     }}

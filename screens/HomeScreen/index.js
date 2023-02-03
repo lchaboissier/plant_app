@@ -7,6 +7,7 @@ import { Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import firebase from "firebase/app";
 import "firebase/auth";
+import FlashMessage, { showMessage } from "react-native-flash-message";
 import { Ionicons } from '@expo/vector-icons';
 // import Icons from 'react-native-vector-icons/FontAwesome';
 // import { MenuContext, Menu, MenuOptions, MenuOption, MenuTrigger, MenuProvider } from 'react-native-popup-menu';
@@ -41,6 +42,11 @@ const HomeScreen = ({ navigation }) => {
         // L'utilisateur a été déconnecté
         console.log("Utilisateur déconnecté");
         navigation.navigate("SignIn");
+        showMessage({
+          message: "Vous vous êtes déconnecté.",
+          type: "info",
+          duration: 3000
+      });
       })
       .catch(error => {
         // La déconnexion a échoué
@@ -109,6 +115,7 @@ function HomePage({ navigation }) {
   // };
   return (
     <View style={styles.container}>
+    <FlashMessage position="top" />
       {/* <Text style={{marginLeft:16, marginTop:16, fontSize: 18}}>Liste des plantes</Text> */}
       <View style={styles.titleContainer}>
         <Text style={styles.titleText}>Liste des plantes</Text>

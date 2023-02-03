@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, TextInput, Image, StyleSheet, useWindowDimensions, ScrollView, Alert, TouchableOpacity } from 'react-native'
 import Logo from '../../assets/icon.png'
-import FlashMessage from "react-native-flash-message";
+import FlashMessage, { showMessage } from "react-native-flash-message";
 import { useNavigation } from '@react-navigation/native';
 import { useForm } from 'react-hook-form';
 import { useFonts } from 'expo-font';
@@ -19,7 +19,7 @@ const SignInScreen = () => {
             .then(userCredentials => {
                 const user = userCredentials.user;
                 console.log('Connecté en tant que : ', user.email);
-                FlashMessage.show({
+                showMessage({
                     message: "Authentification réussie !",
                     type: "success",
                     duration: 3000
@@ -34,6 +34,10 @@ const SignInScreen = () => {
                     Alert.alert("Erreur", "Opération non autorisé.");
                 } else if (error.code == "auth/weak-password") {
                     Alert.alert("Erreur", "Le mot de passe est trop faible.");
+                } else if (error.code === 'auth/wrong-password') {
+                    Alert.alert("Erreur", 'Adresse Email ou mot de passe incorrect.');
+                } else if (error.code === 'auth/user-not-found') {
+                    Alert.alert("Erreur",'Adresse Email ou mot de passe incorrect.');
                 }
             })
     }
@@ -76,6 +80,7 @@ const SignInScreen = () => {
     } else {
         return (
             <ScrollView style={{ backgroundColor: "#b0ffd0" }} showsVerticalScrollIndicator={false}>
+            <FlashMessage position="top" />
                 <View style={styles.root}>
                     <Image
                         source={Logo}
