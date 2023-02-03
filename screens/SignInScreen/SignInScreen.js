@@ -37,7 +37,7 @@ const SignInScreen = () => {
                 } else if (error.code === 'auth/wrong-password') {
                     Alert.alert("Erreur", 'Adresse Email ou mot de passe incorrect.');
                 } else if (error.code === 'auth/user-not-found') {
-                    Alert.alert("Erreur",'Adresse Email ou mot de passe incorrect.');
+                    Alert.alert("Erreur", 'Adresse Email ou mot de passe incorrect.');
                 }
             })
     }
@@ -80,7 +80,7 @@ const SignInScreen = () => {
     } else {
         return (
             <ScrollView style={{ backgroundColor: "#b0ffd0" }} showsVerticalScrollIndicator={false}>
-            <FlashMessage position="top" />
+                <FlashMessage position="top" />
                 <View style={styles.root}>
                     <Image
                         source={Logo}

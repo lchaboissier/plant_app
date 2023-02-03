@@ -46,7 +46,7 @@ const HomeScreen = ({ navigation }) => {
           message: "Vous vous êtes déconnecté.",
           type: "info",
           duration: 3000
-      });
+        });
       })
       .catch(error => {
         // La déconnexion a échoué
@@ -84,14 +84,36 @@ const HomeScreen = ({ navigation }) => {
               <Ionicons
                 name="log-out-outline"
                 size={26}
-                style={{marginRight: 20}}
+                style={{ marginRight: 20 }}
                 onPress={() => signOut()}
               />
             </TouchableOpacity>
           ),
         }}
       />
-      <tab.Screen style={{ fontFamily: 'Montserrat', color: '#b0ffd0' }} name='Aide' component={HelpPage} />
+      <tab.Screen
+        style={
+          {
+            fontFamily: 'Montserrat',
+            color: '#b0ffd0'
+          }
+        }
+        name='Aide'
+        component={HelpPage}
+        options={{
+          title: 'Aide',
+          headerRight: () => (
+            <TouchableOpacity>
+              <Ionicons
+                name="log-out-outline"
+                size={26}
+                style={{ marginRight: 20 }}
+                onPress={() => signOut()}
+              />
+            </TouchableOpacity>
+          ),
+        }}
+      />
     </tab.Navigator>
   );
 }
@@ -115,7 +137,7 @@ function HomePage({ navigation }) {
   // };
   return (
     <View style={styles.container}>
-    <FlashMessage position="top" />
+      <FlashMessage position="top" />
       {/* <Text style={{marginLeft:16, marginTop:16, fontSize: 18}}>Liste des plantes</Text> */}
       <View style={styles.titleContainer}>
         <Text style={styles.titleText}>Liste des plantes</Text>

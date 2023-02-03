@@ -13,6 +13,8 @@ const HelpPage2 = ({ navigation }) => {
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <MaterialIcons style={styles.icon} name="keyboard-arrow-left" size={30} color="#333" />
                     </TouchableOpacity>
+                    <Text style={styles.headerText}>Aide 2</Text>
+                    <View style={styles.rightComponent} />
                 </View>
                 <View style={styles.border} />
                 <View style={styles.shadow} />
@@ -30,10 +32,21 @@ const HelpPage2 = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        fontFamily: 'Montserrat',
     },
     header: {
         padding: 15,
-        alignItems: 'flex-start',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontFamily: 'Montserrat',
+        justifyContent: 'space-between'
+    },
+    headerText: {
+        flex: 1,
+        fontSize: 16,
+        textAlign: 'center',
+        fontFamily: 'Montserrat-Bold',
     },
     icon: {
         width: '100%',
@@ -41,26 +54,35 @@ const styles = StyleSheet.create({
         // paddingBottom: 20,
         // borderBottomColor: 'grey',
         // borderBottomWidth: 1,
+        fontFamily: 'Montserrat',
     },
     border: {
         borderBottomColor: '#d3d3d3',
         borderBottomWidth: 1,
         width: '100%',
         // marginTop: 15,
+        fontFamily: 'Montserrat',
     },
     content: {
         flex: 1,
         padding: 20,
         alignItems: 'flex-start',
         justifyContent: 'flex-start',
+        fontFamily: 'Montserrat',
     },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 20,
+        fontFamily: 'Montserrat',
     },
+    rightComponent: {
+        width: 30,
+        fontFamily: 'Montserrat',
+      },
     description: {
         textAlign: 'center',
+        fontFamily: 'Montserrat',
     },
     shadow: {
         width: '100%',
@@ -71,7 +93,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.8,
         shadowRadius: 1,
         elevation: 5,
-      },
+        fontFamily: 'Montserrat',
+    },
 });
 
 export default HelpPage2;

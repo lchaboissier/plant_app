@@ -20,17 +20,15 @@ const SignUpScreen = () => {
     const pwd = watch('password');
     const navigation = useNavigation();
 
-    function forSignUp({ navigation }) {
-        const handleSignUp = () => {
-            auth
-                .createUserWithEmailAndPassword(email, password)
-                .then(userCredentials => {
-                    const user = userCredentials.user;
-                    console.log('Le compte', user.email, 'a bien été créé !');
-                    navigation.navigate("SignIn");
-                })
-                .catch(error => alert(error.message))
-        }
+    const handleSignUp = () => {
+        auth
+            .createUserWithEmailAndPassword(email, password)
+            .then(userCredentials => {
+                const user = userCredentials.user;
+                console.log('Le compte', user.email, 'a bien été créé !');
+                navigation.navigate("SignIn");
+            })
+            .catch(error => alert(error.message))
     }
 
     const onTermsOfUsePressed = () => {
@@ -59,11 +57,11 @@ const SignUpScreen = () => {
                         required: 'Le nom d\'utilisateur est obligatoire.',
                         minLength: {
                             value: 3,
-                            message: 'Le nom d\'utilsiateur doit comporter au moins 3 caractères.'
+                            message: 'Le nom d\'utilisateur doit comporter au moins 3 caractères.'
                         },
                         maxLength: {
                             value: 24,
-                            message: 'Le nom d\'utilsiateur ne doit pas excéder 24 caractères.'
+                            message: 'Le nom d\'utilisateur ne doit pas excéder 24 caractères.'
                         }
                     }}
                     onChangeText={text => setUsername(text)}
@@ -106,10 +104,9 @@ const SignUpScreen = () => {
                     onChangeText={text => setPasswordRepeat(text)}
                 />
 
-                <TouchableOpacity style={styles.buttonStyle} onPress={() => handleSignUp()} navigation={useNavigation()}>
+                <TouchableOpacity title="Créer un compte" style={styles.buttonStyle} onPress={handleSignUp}>
                     <Text style={styles.buttonStyleText}>Créer un compte</Text>
                 </TouchableOpacity>
-                {/* <CustomButton text="Créer un compte" onPress={handleSignUp} navigation={useNavigation()} /> */}
 
                 <Text style={styles.text}>En vous inscrivant, vous confirmez que vous acceptez nos <Text style={styles.link}>conditions d'utilisation</Text> et notre <Text style={styles.link}>politique de confidentialité</Text>.</Text>
 
@@ -157,7 +154,7 @@ const styles = StyleSheet.create({
     },
     buttonStyle: {
         width: '100%',
-        
+
         padding: 15,
         marginVertical: 5,
         backgroundColor: '#7cb89e',
