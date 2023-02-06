@@ -141,6 +141,7 @@ function HomePage({ navigation }) {
       {/* <Text style={{marginLeft:16, marginTop:16, fontSize: 18}}>Liste des plantes</Text> */}
       <View style={styles.titleContainer}>
         <Text style={styles.titleText}>Liste des plantes</Text>
+        <Text style={styles.subtitleText}>Vous trouverez ci-dessous la liste des plantes connectées.</Text>
         {/* <Button
           title="Se déconnecter"
           onPress={() => signOut()}
@@ -196,16 +197,18 @@ const styles = StyleSheet.create({
   },
 
   titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
     width: '100%',
     padding: 16,
+    fontFamily: 'Montserrat'
   },
   titleText: {
     fontSize: 20,
+    fontFamily: 'Montserrat'
   },
-
+  subtitleText: {
+    fontSize: 12,
+    fontFamily: 'Montserrat'
+  },
   box: {
     width: '100%',
     height: '100%',
@@ -221,6 +224,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginRight: 15,
+    fontFamily: 'Montserrat'
   },
 });
 

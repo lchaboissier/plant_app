@@ -15,9 +15,15 @@ export const Plant = ({ title, subtitle, temperature, humidity, luminosity }) =>
 
   return (
     <TouchableOpacity style={styles.fieldContainer} onPress={(onPlantInfoPress)}>
-      <View>
-        <Text style={styles.titleText}>{title}</Text>
-        <Text style={styles.subtitleText}>{subtitle}</Text>
+      <View style={{ flexDirection: 'row', alignContent: 'center', alignItems: 'center' }}>
+        <Image
+          source={require('../../assets/icon-no-bg.png')}
+          style={{ width: 50, height: 50, marginRight:5 }}
+        />
+        <View>
+          <Text style={styles.titleText}>{title}</Text>
+          <Text style={styles.subtitleText}>{subtitle}</Text>
+        </View>
       </View>
       <View style={styles.valuesContainer}>
         <Text style={styles.valueText}>{temperature}°C</Text>
@@ -44,25 +50,30 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 16,
+    padding: 10,
     backgroundColor: '#b0ffd0',
     borderRadius: 10,
+    fontFamily: 'Montserrat'
   },
   titleText: {
     fontSize: 16,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'Montserrat-Bold'
   },
   subtitleText: {
     fontSize: 14,
     color: '#666',
+    fontFamily: 'Montserrat'
   },
   valuesContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    fontFamily: 'Montserrat'
   },
   valueText: {
     fontSize: 14,
     marginRight: 8,
+    fontFamily: 'Montserrat'
   },
 
 });
