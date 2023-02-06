@@ -16,31 +16,35 @@ const PlantInfoScreen = ({ navigation }) => {
         </View>
         <View style={styles.border} />
         <View style={styles.shadow} />
-        <View style={styles.content}>
-          {/* <Image source={plant.icon} /> */}
-          <Plant icon={require('../../assets/icon.png')} />
-          {/* <Text>{plant.title}</Text> */}
-          <Plant title={'Title'} />
-          <View>
-            <View style={{ flexDirection: 'row' }}>
-              <Image style={{ width: 64, height: 64 }} source={require('../../assets/temperature-icon.png')} />
-              {/* <Text>Température: {plant.temperature}</Text> */}
-              <Plant temperature={5} />
-            </View>
-            <View style={{ flexDirection: 'row' }}>
-              <Image style={{ width: 64, height: 64 }} source={require('../../assets/light-icon.png')} />
-              {/* <Text>Luminosité: {plant.light}</Text> */}
-              <Plant luminosity={5} />
-            </View>
-            <View style={{ flexDirection: 'row' }}>
-              <Image style={{ width: 64, height: 64 }} source={require('../../assets/humidity-icon.png')} />
-              {/* <Text>Taux d'humidité: {plant.humidity}</Text> */}
-              <Plant humidity={5} />
-            </View>
-          </View>
+        <View style={styles.plantContainer}>
+
         </View>
       </View>
     </ScrollView>
+
+// {/* <View style={styles.content}> */}
+          // {/* <Image source={plant.icon} /> */}
+          // <Plant icon={require('../../assets/icon.png')} />
+          // {/* <Text>{plant.title}</Text> */}
+          // <Plant title={'Title'} />
+          // <View>
+            // <View style={{ flexDirection: 'row' }}>
+              // <Image style={{ width: 64, height: 64 }} source={require('../../assets/temperature-icon.png')} />
+              // {/* <Text>Température: {plant.temperature}</Text> */}
+              // <Plant temperature={5} />
+            // </View>
+            // <View style={{ flexDirection: 'row' }}>
+              // <Image style={{ width: 64, height: 64 }} source={require('../../assets/light-icon.png')} />
+              // {/* <Text>Luminosité: {plant.light}</Text> */}
+              // <Plant luminosity={5} />
+            // </View>
+            // <View style={{ flexDirection: 'row' }}>
+              // <Image style={{ width: 64, height: 64 }} source={require('../../assets/humidity-icon.png')} />
+              // {/* <Text>Taux d'humidité: {plant.humidity}</Text> */}
+              // <Plant humidity={5} />
+            // </View>
+          // </View>
+        // </View>
 
   );
 };
@@ -49,6 +53,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  plantContainer: {
+    flexDirection: 'row',
+    margin: 20,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 16,
+    backgroundColor: '#b0ffd0',
+    borderRadius: 10,
+  },
   header: {
     padding: 15,
     flexDirection: 'row',
@@ -56,13 +69,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontFamily: 'Montserrat',
     justifyContent: 'space-between'
-},
-headerText: {
+  },
+  headerText: {
     flex: 1,
     fontSize: 16,
     textAlign: 'center',
     fontFamily: 'Montserrat-Bold',
-},
+  },
   icon: {
     width: '100%',
     marginTop: 10,

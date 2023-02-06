@@ -78,7 +78,7 @@ const HomeScreen = ({ navigation }) => {
         name='Accueil'
         component={HomePage}
         options={{
-          title: 'Home',
+          title: 'Accueil',
           headerRight: () => (
             <TouchableOpacity>
               <Ionicons
