@@ -56,6 +56,8 @@ const HomeScreen = ({ navigation }) => {
   return (
     <tab.Navigator
       screenOptions={({ route }) => ({
+        tabBarActiveTintColor: '#00d096',
+        tabBarInactiveTintColor: 'grey',
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
           if (route.name == "Accueil") {
@@ -84,7 +86,7 @@ const HomeScreen = ({ navigation }) => {
               <Ionicons
                 name="log-out-outline"
                 size={26}
-                style={{ marginRight: 20 }}
+                style={{ marginRight: 20, fontFamily: 'Montserrat' }}
                 onPress={() => signOut()}
               />
             </TouchableOpacity>
@@ -153,9 +155,9 @@ function HomePage({ navigation }) {
           <Plant style={{ fontFamily: 'Montserrat' }}
             title={'Title'}
             subtitle={'Subtitle'}
-            temperature={5}
-            luminosity={5}
-            humidity={5}
+            temperature={0}
+            luminosity={0}
+            humidity={0}
             icon={require('../../assets/icon.png')}
             iconSize={48} />
         </View>
@@ -170,7 +172,7 @@ function HelpPage() {
 
   return (
     <View style={styles.container}>
-      <Text style={{ marginLeft: 16, marginTop: 16, fontSize: 18 }}>Problèmes courants</Text>
+      <Text style={{ marginLeft: 16, marginTop: 16, fontSize: 18, fontFamily: 'Montserrat' }}>Problèmes courants</Text>
       <ScrollView>
         <View style={styles.box}>
           <Help title="Aide 1" screenName={'HelpPage1'} />

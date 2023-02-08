@@ -40,13 +40,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         fontFamily: 'Montserrat',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginTop: 10
     },
     headerText: {
         flex: 1,
         fontSize: 16,
         textAlign: 'center',
         fontFamily: 'Montserrat-Bold',
+        marginTop: 10
     },
     icon: {
         width: '100%',

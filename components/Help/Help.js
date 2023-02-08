@@ -8,7 +8,7 @@ export const Help = ({ screenName, title }) => {
   const navigation = useNavigation();
 
   const handlePress = () => {
-    navigation.navigate(screenName);
+    navigation.navigate(screenName, {}, { animation: 'slide-horizontal'});
   };
 
   return (
