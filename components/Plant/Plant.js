@@ -38,7 +38,7 @@ export const Plant = ({ title, subtitle, temperature, humidity, luminosity }) =>
         <Ionicons name="ios-arrow-forward" style={{ marginRight:15 }} size={24}  color="#000" />
 
         <TouchableOpacity style={styles.scrollButton} onPress={(onDetailsPress)}>
-          <Ionicons name="ios-arrow-down" size={24} color="#000" />
+          <Ionicons name={showDetails ? 'ios-chevron-up' : 'ios-chevron-down'} size={24} color="#000" />
         </TouchableOpacity>
       </View>
 
