@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat'
   },
   titleText: {
+    marginRight: 25,
     fontSize: 16,
     // fontWeight: 'bold',
     fontFamily: 'Montserrat-Bold'
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat'
   },
   valuesContainer: {
-    marginRight: 40,
+    marginRight: 30,
     flexDirection: 'row',
     alignItems: 'center',
     fontFamily: 'Montserrat'
