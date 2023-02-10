@@ -86,6 +86,7 @@ const HomeScreen = ({ navigation }) => {
               <Ionicons
                 name="log-out-outline"
                 size={26}
+                color='#D22B2B'
                 style={{ marginRight: 20, fontFamily: 'Montserrat' }}
                 onPress={() => signOut()}
               />
@@ -109,6 +110,7 @@ const HomeScreen = ({ navigation }) => {
               <Ionicons
                 name="log-out-outline"
                 size={26}
+                color='#D22B2B'
                 style={{ marginRight: 20 }}
                 onPress={() => signOut()}
               />

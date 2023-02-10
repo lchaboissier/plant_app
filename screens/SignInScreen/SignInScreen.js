@@ -36,9 +36,9 @@ const SignInScreen = () => {
                 } else if (error.code == "auth/weak-password") {
                     Alert.alert("Erreur", "Le mot de passe est trop faible.");
                 } else if (error.code === 'auth/wrong-password') {
-                    Alert.alert("Erreur", 'Adresse E-mail ou mot de passe incorrect.');
+                    Alert.alert("Erreur", 'Adresse e-mail ou mot de passe incorrect.');
                 } else if (error.code === 'auth/user-not-found') {
-                    Alert.alert("Erreur", 'Adresse E-mail ou mot de passe incorrect.');
+                    Alert.alert("Erreur", 'Adresse e-mail ou mot de passe incorrect.');
                 }
             })
     }
@@ -119,7 +119,7 @@ const SignInScreen = () => {
                             alignItems: 'center',
                         }} onPress={() => setSecureTextEntry(!secureTextEntry)}>
                             <FontAwesome
-                                name={secureTextEntry ? 'eye-slash' : 'eye'}
+                                name={secureTextEntry ? 'eye' : 'eye-slash'}
                                 size={20}
                                 color='black'
                                 style={{ marginRight: 10 }}

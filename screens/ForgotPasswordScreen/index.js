@@ -1,28 +1,41 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, Image, StyleSheet, useWindowDimensions, ScrollView, Alert, TouchableOpacity } from 'react-native'
+import React, { useState } from "react";
+import { View, Text, TextInput, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { useForm } from 'react-hook-form';
 import { auth } from '../../firebase';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 const ForgotPasswordScreen = () => {
     const navigation = useNavigation();
     const [email, setEmail] = useState('');
     const { control, formState: { errors }, } = useForm();
 
-    const changePassword = email => {
-        auth.sendPasswordResetEmail(email)
+    const handleChange = text => {
+        setEmail(text);
+      };
+    
+      const sendPasswordReset = email => {
+        firebase.auth().sendPasswordResetEmail(email)
           .then(() => {
-            console.log("Password reset email sent successfully.");
+            console.log("L'email de réinitialisation du mot de passe a été envoyé avec succès.");
           })
           .catch(error => {
-            console.error("Error sending password reset email:", error);
+            console.error("Erreur d'envoi de l'email de réinitialisation du mot de passe :", error);
           });
-    };
-
-    const handleSubmit = event => {
-        event.preventDefault();
-        this.sendPasswordReset(this.state.email);
+      };
+    
+      const handleSubmit = () => {
+        sendPasswordReset(email);
+        Alert.alert(
+            'Confirmation',
+            'Un message de confirmation a été envoyé à l\'adresse e-mail entrée.',
+            [
+              { text: 'OK', onPress: () => console.log('OK cliqué') },
+            ],
+            { cancelable: false },
+          );
       };
 
     // useEffect(() => {
@@ -55,15 +68,14 @@ const ForgotPasswordScreen = () => {
                             <Text style={styles.title}>Réinitialisation du mot de passe</Text>
                             <Text style={styles.subtitle}>Saisissez une adresse électronique associée à votre compte et nous vous enverrons un courriel contenant les instructions pour réinitialiser votre mot de passe.</Text>
                             <TextInput
-                                name="email"
                                 placeholder="Entrez votre adresse E-mail."
                                 value={email}
                                 style={styles.textInput}
-                                rules={{ required: "L'adresse E-mail est obligatoire." }}
-                            
+                                onChangeText={handleChange}
+                                required
                             />
                         </View>
-                        <TouchableOpacity title="Envoyer" style={styles.buttonStyle} onPress={changePassword}>
+                        <TouchableOpacity title="Envoyer" style={styles.buttonStyle} onPress={handleSubmit}>
                             <Text style={styles.buttonStyleText}>Envoyer</Text>
                         </TouchableOpacity>
                     </ScrollView>
