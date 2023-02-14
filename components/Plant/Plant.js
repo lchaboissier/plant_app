@@ -25,7 +25,7 @@ export const Plant = ({ title, subtitle, temperature, humidity, luminosity }) =>
             source={require('../../assets/icon.png')}
             style={{ width: 50, height: 50, marginRight: 5 }}
           />
-          <View style={{ marginRight: 20}}>
+          <View style={{ marginRight: 20 }}>
             <Text style={styles.titleText}>{title}</Text>
             <Text style={styles.subtitleText}>{subtitle}</Text>
           </View>
@@ -35,7 +35,7 @@ export const Plant = ({ title, subtitle, temperature, humidity, luminosity }) =>
           <Text style={styles.valueText}>{luminosity} lux</Text>
           <Text style={styles.valueText}>{humidity}%</Text>
         </View>
-        <Ionicons name="ios-arrow-forward" style={{ marginRight:15 }} size={24}  color="#000" />
+        <Ionicons name="ios-arrow-forward" style={{ marginRight: 15 }} size={24} color="#000" />
 
         <TouchableOpacity style={styles.scrollButton} onPress={(onDetailsPress)}>
           <Ionicons name={showDetails ? 'ios-chevron-up' : 'ios-chevron-down'} size={24} color="#000" />
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat'
   },
   titleText: {
-    marginRight: 25,
+    // marginRight: 25,
     fontSize: 16,
     // fontWeight: 'bold',
     fontFamily: 'Montserrat-Bold'
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat'
   },
   valuesContainer: {
-    marginRight: 30,
+    marginRight: 5,
     flexDirection: 'row',
     alignItems: 'center',
     fontFamily: 'Montserrat'

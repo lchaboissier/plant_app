@@ -175,12 +175,12 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat',
     },
     buttonPaddingLeft: {
-        paddingLeft: 45,
+        paddingLeft: 20,
         // marginVertical: 5,
         fontFamily: 'Montserrat',
     },
     buttonPaddingRight: {
-        paddingRight: 45,
+        paddingRight: 20,
         // marginVertical: 5,
         fontFamily: 'Montserrat',
     },
