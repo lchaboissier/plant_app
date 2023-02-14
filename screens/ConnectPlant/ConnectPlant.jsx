@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text, TextInput, Button, ScrollView } from 'react-native';
-import { auth } from '../../firebase';
+import firebase from 'firebase';
+import { auth, database } from '../../firebase';
 
 const ConnectPlant = ({}) => {
   const [ip, setIp] = useState('');
@@ -60,9 +61,17 @@ const ConnectPlant = ({}) => {
       marginLeft: 20
     }
   });
+    
 
   function handleChange() {
-
+    if (ip.length > 0) {
+      const userUID = auth.currentUser.uid;
+      console.log(ip);
+      database.ref('ips/' + userUID).set({
+        address: ip,
+        uid: userUID
+      })
+    }
   }
 
   return (
@@ -72,6 +81,7 @@ const ConnectPlant = ({}) => {
           <Text style={styles.title}>Entrer l'IP de votre plante :</Text>
           <TextInput
             style={styles.textInput}
+            onChangeText={(text) => setIp(text)}
           >
           </TextInput>
           <TouchableOpacity style={styles.button} onPress={handleChange}>
