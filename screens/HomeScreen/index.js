@@ -9,6 +9,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import FlashMessage, { showMessage } from "react-native-flash-message";
 import { Ionicons } from '@expo/vector-icons';
+import ConnectPlant from '../ConnectPlant/ConnectPlant';
 // import Icons from 'react-native-vector-icons/FontAwesome';
 // import { MenuContext, Menu, MenuOptions, MenuOption, MenuTrigger, MenuProvider } from 'react-native-popup-menu';
 
@@ -59,13 +60,7 @@ const HomeScreen = ({ navigation }) => {
         tabBarActiveTintColor: '#00d096',
         tabBarInactiveTintColor: 'grey',
         tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
-          if (route.name == "Accueil") {
-            iconName = "home"
-          } else if (route.name == "Aide") {
-            iconName = "help"
-          }
-
+          let iconName = route.name;
           return <Ionicons name={iconName} size={25} />
         }
       })}
@@ -77,7 +72,7 @@ const HomeScreen = ({ navigation }) => {
             color: '#b0ffd0'
           }
         }
-        name='Accueil'
+        name='home'
         component={HomePage}
         options={{
           title: 'Accueil',
@@ -101,7 +96,31 @@ const HomeScreen = ({ navigation }) => {
             color: '#b0ffd0'
           }
         }
-        name='Aide'
+        name='add'
+        component={ConnectPlant}
+        options={{
+          title: 'Ajouté',
+          headerRight: () => (
+            <TouchableOpacity>
+              <Ionicons
+                name="log-out-outline"
+                size={26}
+                color='#D22B2B'
+                style={{ marginRight: 20 }}
+                onPress={() => signOut()}
+              />
+            </TouchableOpacity>
+          ),
+        }}
+      />
+      <tab.Screen
+        style={
+          {
+            fontFamily: 'Montserrat',
+            color: '#b0ffd0'
+          }
+        }
+        name='help'
         component={HelpPage}
         options={{
           title: 'Aide',

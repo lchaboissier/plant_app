@@ -19,6 +19,7 @@ const SignInScreen = () => {
             .signInWithEmailAndPassword(email, password)
             .then(userCredentials => {
                 const user = userCredentials.user;
+                console.log(user.uid);
                 console.log('Connecté en tant que : ', user.email);
                 showMessage({
                     message: "Authentification réussie !",
