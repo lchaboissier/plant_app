@@ -18,9 +18,10 @@ import { Ionicons } from '@expo/vector-icons';
 const tab = createBottomTabNavigator();
 
 
-function LogoutButton({ onPress }) {
+
+function SettingsButton() {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.button}>
+    <TouchableOpacity style={styles.button}>
       <Ionicons name="ios-log-out" size={25} color="black" />
     </TouchableOpacity>
   );
@@ -34,25 +35,10 @@ const HomeScreen = ({ navigation }) => {
   //     ),
   //   }, [navigation]);
   // })
-  const signOut = () => {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        // L'utilisateur a été déconnecté
-        console.log("Utilisateur déconnecté");
-        navigation.navigate("SignIn");
-        showMessage({
-          message: "Vous vous êtes déconnecté.",
-          type: "info",
-          duration: 3000
-        });
-      })
-      .catch(error => {
-        // La déconnexion a échoué
-        console.error(error);
-      });
+  const onSettingsPressed = () => {
+    navigation.navigate('Settings');
   };
+
   return (
     <tab.Navigator
       screenOptions={({ route }) => ({
@@ -84,11 +70,11 @@ const HomeScreen = ({ navigation }) => {
           headerRight: () => (
             <TouchableOpacity>
               <Ionicons
-                name="log-out-outline"
+                name="settings-sharp"
                 size={26}
-                color='#D22B2B'
+                // color='#D22B2B'
                 style={{ marginRight: 20, fontFamily: 'Montserrat' }}
-                onPress={() => signOut()}
+                onPress={() => onSettingsPressed()}
               />
             </TouchableOpacity>
           ),
@@ -108,12 +94,19 @@ const HomeScreen = ({ navigation }) => {
           headerRight: () => (
             <TouchableOpacity>
               <Ionicons
+                name="settings-sharp"
+                size={26}
+                // color='#D22B2B'
+                style={{ marginRight: 20 }}
+                onPress={() => onSettingsPressed()}
+              />
+              {/* <Ionicons
                 name="log-out-outline"
                 size={26}
                 color='#D22B2B'
                 style={{ marginRight: 20 }}
                 onPress={() => signOut()}
-              />
+              /> */}
             </TouchableOpacity>
           ),
         }}
