@@ -1,66 +1,35 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity, Text, Image, ScrollView } from 'react-native';
 import { MaterialIcons, Ionicons } from '@expo/vector-icons';
-import firebase from "firebase/app";
-import "firebase/auth";
-import FlashMessage, { showMessage } from "react-native-flash-message";
 
-const SettingsScreen = ({ navigation }) => {
-    const onAboutPressed = () => {
-        navigation.navigate('About');
-      };
-    const signOut = () => {
-        firebase
-          .auth()
-          .signOut()
-          .then(() => {
-            // L'utilisateur a été déconnecté
-            console.log("Utilisateur déconnecté");
-            navigation.navigate("SignIn");
-            showMessage({
-              message: "Vous vous êtes déconnecté.",
-              type: "info",
-              duration: 3000
-            });
-          })
-          .catch(error => {
-            // La déconnexion a échoué
-            console.error(error);
-          });
-      };
+const AboutScreen = ({ navigation }) => {
+
     return (
-        <ScrollView style={{ backgroundColor: '#FFFFFF'}}>
+        <ScrollView style={{ backgroundColor: '#FFFFFF', fontFamily: 'Montserrat' }}>
             <View style={styles.container}>
                 <View style={styles.header}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <MaterialIcons style={styles.icon} name="keyboard-arrow-left" size={30} color="#333" />
                     </TouchableOpacity>
-                    {/* <Text style={styles.headerText}>Paramètres</Text> */}
+                    <Text style={styles.headerText}>À propos</Text>
                     <View style={styles.rightComponent} />
                 </View>
                 <View style={styles.border} />
                 <View style={styles.shadow} />
                 <View style={styles.content}>
-                    <View style={styles.container}>
-                        <Text style={{ fontSize: 18, fontFamily: 'Montserrat' }}>Paramètres</Text>
-                        <ScrollView>
-                            <View style={styles.box}>
-                                <TouchableOpacity style={styles.itemContainer} onPress={() => signOut()}>
-                                    <Text style={styles.titleParameter}>Se déconnecter</Text>
-                                    <Ionicons name="log-out-outline" size={24} color="#D22B2B" />
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.itemContainer} onPress={() => onAboutPressed()}>
-                                    <Text style={styles.titleParameter}>À propos</Text>
-                                    <MaterialIcons name="keyboard-arrow-right" size={24} color="#333" />
-                                </TouchableOpacity>
-                            </View>
-                        </ScrollView>
+                    <View style={{ flex: 1, marginTop: 20, justifyContent: 'center', alignItems: 'center' }}>
+                        <Image
+                            source={require('../../assets/icon.png')}
+                            style={{ width: 150, height: 150, marginRight: 5, borderRadius: 10 }} />
+                        <Text style={styles.titleApp}>Plant_app</Text>
+                        <Text style={styles.versionApp}>Version de l'application : 1.0</Text>
+                        <Text style={styles.authorApp}>Créée par Luca Chaboissier & Alexandre Saner.</Text>
                     </View>
                 </View>
             </View>
         </ScrollView>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -74,7 +43,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontFamily: 'Montserrat',
         justifyContent: 'space-between',
-        marginTop: 10
+        marginTop: 10,
     },
     headerText: {
         flex: 1,
@@ -104,6 +73,9 @@ const styles = StyleSheet.create({
         // alignItems: 'flex-start',
         // justifyContent: 'flex-start',
         fontFamily: 'Montserrat',
+    },
+    aboutContent: {
+        flex: 1, marginTop: 20, justifyContent: 'center', alignItems: 'center'
     },
     titlePage: {
         fontSize: 16,
@@ -139,17 +111,23 @@ const styles = StyleSheet.create({
         borderBottomColor: '#eee',
         fontFamily: 'Montserrat'
     },
-    titleParameter: {
-        fontSize: 14,
-        flex: 1,
+    titleApp: {
+        marginVertical: 15,
+        fontSize: 18,
         fontFamily: 'Montserrat'
     },
-    box: {
-        width: '100%',
-        height: '100%',
-        padding: 25,
+    versionApp: {
+        marginVertical: 10,
+        color: '#8c8c8c',
+        fontFamily: 'Montserrat'
+    },
+    authorApp: {
+        marginVertical: 32,
+        fontSize: 13,
+        color: '#8c8c8c',
         fontFamily: 'Montserrat',
+        textAlign: 'center'
     },
 });
 
-export default SettingsScreen
+export default AboutScreen

@@ -8,6 +8,7 @@ import SignUpScreen from '../screens/SignUpScreen/SignUpScreen';
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import HomeScreen from '../screens/HomeScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import AboutScreen from '../screens/AboutScreen';
 import PlantInfoScreen from '../screens/PlantInfoScreen/PlantInfoScreen';
 import HelpPage1 from '../components/HelpInfo/HelpPages/HelpPage1';
 import HelpPage2 from '../components/HelpInfo/HelpPages/HelpPage2';
@@ -27,6 +28,7 @@ const Navigation = () => {
         <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Settings" component={SettingsScreen} />
+        <Stack.Screen name="About" component={AboutScreen} />
         <Stack.Screen name="PlantInfo" component={PlantInfoScreen} />
         <Stack.Screen name="HelpPage1" component={HelpPage1} />
         <Stack.Screen name="HelpPage2" component={HelpPage2} />
