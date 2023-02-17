@@ -68,7 +68,7 @@ const ForgotPasswordScreen = () => {
                             <Text style={styles.title}>Réinitialisation du mot de passe</Text>
                             <Text style={styles.subtitle}>Saisissez une adresse électronique associée à votre compte et nous vous enverrons un courriel contenant les instructions pour réinitialiser votre mot de passe.</Text>
                             <TextInput
-                                placeholder="Entrez votre adresse E-mail."
+                                placeholder="Entrez votre adresse e-mail."
                                 value={email}
                                 style={styles.textInput}
                                 onChangeText={handleChange}

@@ -32,11 +32,11 @@ const SignUpScreen = () => {
     }
 
     const onTermsOfUsePressed = () => {
-        console.warn('onTermsOfUsePressed');
+        navigation.navigate('TermsOfUse');
     };
 
-    const onPrivacyPressed = () => {
-        console.warn('onPrivacyPressed');
+    const onPrivacyPolicyPressed = () => {
+        navigation.navigate('PrivacyPolicy');
     }
 
     const onSignInPress = () => {
@@ -108,7 +108,7 @@ const SignUpScreen = () => {
                     <Text style={styles.buttonStyleText}>Créer un compte</Text>
                 </TouchableOpacity>
 
-                <Text style={styles.text}>En vous inscrivant, vous confirmez que vous acceptez nos <Text style={styles.link}>conditions d'utilisation</Text> et notre <Text style={styles.link}>politique de confidentialité</Text>.</Text>
+                <Text style={styles.text}>En vous inscrivant, vous confirmez que vous acceptez nos <TouchableOpacity onPress={() => onTermsOfUsePressed()}><Text style={styles.link}>conditions d'utilisation</Text></TouchableOpacity> et notre <TouchableOpacity onPress={() => onPrivacyPolicyPressed()}><Text style={styles.link}>politique de confidentialité</Text></TouchableOpacity>.</Text>
 
                 <TouchableOpacity title="Vous avez déjà un compte ? Cliquez-ici" style={styles.button} onPress={onSignInPress}>
                     <Text style={styles.text}>Vous avez déjà un compte ? Cliquez-ici.</Text>
