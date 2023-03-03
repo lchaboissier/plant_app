@@ -1,7 +1,8 @@
 // Import the functions you need from the SDKs you need
 // import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
-import * as firebase from 'firebase';
+import firebase from 'firebase';
+import 'firebase/database';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -10,6 +11,7 @@ import * as firebase from 'firebase';
 const firebaseConfig = {
     apiKey: "AIzaSyD73gr3dXMd8IwBavF1j7Z9HRawuZHRcTM",
     authDomain: "plant-app-auth-86f1a.firebaseapp.com",
+    databaseURL: "https://plant-app-auth-86f1a-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "plant-app-auth-86f1a",
     storageBucket: "plant-app-auth-86f1a.appspot.com",
     messagingSenderId: "1094676812652",
@@ -27,6 +29,8 @@ if (firebase.apps.length === 0) {
     app = firebase.app()
 }
 
+const database = firebase.database();
+
 const auth = firebase.auth()
 
-export { auth };
+export { auth, database };

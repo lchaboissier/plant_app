@@ -1,10 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text, Image, Button, ScrollView } from 'react-native';
 import Plant from '../../components/Plant/Plant';
-import { MaterialIcons } from '@expo/vector-icons'
+import { MaterialIcons } from '@expo/vector-icons';
 
-const PlantInfoScreen = ({ navigation }) => {
-  Plant.title = 'Plante';
+import firebase from 'firebase/app';
+import 'firebase/database';
+import "firebase/auth";
+
+const PlantInfoScreen = ({ navigation, route }) => {
+  const [temperature, setTemperature] = useState(null);
+  const [luminosity, setLuminosity] = useState(null);
+  const [humidity, setHumidity] = useState(null);
+
+  useEffect(() => {
+    const userUID = firebase.auth().currentUser.uid;
+    const plantRef = firebase.database().ref(`ips/${userUID}`);
+
+    // Récupère les données de la plante connectée
+    plantRef.on('value', (snapshot) => {
+      const plantData = snapshot.val();
+
+      // Met à jour les états avec les données de la plante connectée
+      setTemperature(plantData.temperature);
+      setLuminosity(plantData.luminosity);
+      setHumidity(plantData.humidity);
+    });
+
+    // Retourne une fonction de nettoyage pour arrêter l'écoute des changements dans la base de données
+    return () => {
+      plantRef.off('value');
+    };
+  }, []);
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -17,24 +44,24 @@ const PlantInfoScreen = ({ navigation }) => {
         </View>
         <View style={styles.border} />
         <View style={styles.shadow} />
-        <Text style={styles.plantTitle}>{Plant.title}</Text>
+        <Text style={styles.plantTitle}>Ma plante</Text>
         <View style={styles.plantContainer}>
           <Image style={{ width: 162, height: 162, marginBottom: 20 }} source={require('../../assets/icon.png')} />
           <View style={styles.dataContainer}>
             <View styles={styles.row}>
               <Image style={styles.imageData} source={require('../../assets/temperature-icon.png')} />
               <Text style={styles.titleValue}>Température</Text>
-              <Text style={styles.value}>- °C</Text>
+              <Text style={styles.value}>{temperature} °C</Text>
             </View>
             <View styles={styles.row}>
               <Image style={styles.imageData} source={require('../../assets/light-icon.png')} />
               <Text style={styles.titleValue}>Luminosité</Text>
-              <Text style={styles.value}>- lux</Text>
+              <Text style={styles.value}>{luminosity} lux</Text>
             </View>
             <View styles={styles.row}>
               <Image style={styles.imageData} source={require('../../assets/humidity-icon.png')} />
               <Text style={styles.titleValue}>Humidité</Text>
-              <Text style={styles.value}>- %</Text>
+              <Text style={styles.value}>{humidity} %</Text>
             </View>
           </View>
         </View>

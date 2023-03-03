@@ -1,9 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
 
-export const Plant = ({ title, subtitle, temperature, humidity, luminosity }) => {
+export const Plant = () => {
+
+  const [temperature, setTemperature] = useState('');
+  const [luminosity, setLuminosity] = useState('');
+  const [humidity, setHumidity] = useState('');
+
+  useEffect(() => {
+    const userUid = firebase.auth().currentUser.uid;
+    const dbRef = firebase.database().ref('ips/' + userUid);
+    dbRef.on('value', (snapshot) => {
+      const val = snapshot.val();
+      setTemperature(val.temperature);
+      setLuminosity(val.luminosity);
+      setHumidity(val.humidity);
+    });
+  }, []);
 
   const navigation = useNavigation();
 
@@ -26,16 +44,16 @@ export const Plant = ({ title, subtitle, temperature, humidity, luminosity }) =>
             style={{ width: 50, height: 50, marginRight: 5 }}
           />
           <View style={{ marginRight: 20 }}>
-            <Text style={styles.titleText}>{title}</Text>
-            <Text style={styles.subtitleText}>{subtitle}</Text>
+            <Text style={styles.titleText}>Plante</Text>
+            {/* <Text style={styles.subtitleText}>Connectée</Text> */}
           </View>
         </View>
         <View style={styles.valuesContainer}>
-          <Text style={styles.valueText}>{temperature}°C</Text>
+          <Text style={styles.valueText}>{temperature} °C</Text>
           <Text style={styles.valueText}>{luminosity} lux</Text>
-          <Text style={styles.valueText}>{humidity}%</Text>
+          <Text style={styles.valueText}>{humidity} %</Text>
         </View>
-        <Ionicons name="ios-arrow-forward" style={{ marginRight: 15 }} size={24} color="#000" />
+        <Ionicons name="ios-arrow-forward" style={{ marginRight: 7 }} size={24} color="#000" />
 
         <TouchableOpacity style={styles.scrollButton} onPress={(onDetailsPress)}>
           <Ionicons name={showDetails ? 'ios-chevron-up' : 'ios-chevron-down'} size={24} color="#000" />
@@ -47,32 +65,21 @@ export const Plant = ({ title, subtitle, temperature, humidity, luminosity }) =>
           <View styles={styles.row}>
             <Image style={styles.imageData} source={require('../../assets/temperature-icon.png')} />
             <Text style={styles.titleValue}>Température</Text>
-            <Text style={styles.value}>- °C</Text>
+            <Text style={styles.value}>{temperature} °C</Text>
           </View>
           <View styles={styles.row}>
             <Image style={styles.imageData} source={require('../../assets/light-icon.png')} />
             <Text style={styles.titleValue}>Luminosité</Text>
-            <Text style={styles.value}>- lux</Text>
+            <Text style={styles.value}>{luminosity} lux</Text>
           </View>
           <View styles={styles.row}>
             <Image style={styles.imageData} source={require('../../assets/humidity-icon.png')} />
             <Text style={styles.titleValue}>Humidité</Text>
-            <Text style={styles.value}>- %</Text>
+            <Text style={styles.value}>{humidity} %</Text>
           </View>
         </View>
       )}
     </TouchableOpacity>
-
-    // <TouchableOpacity onPress={(onPlantInfoPress)}>
-    //   <View>
-    //     <Text style={styles.titleText}>{title}</Text>
-    //     <Text style={styles.subtitleText}>{subtitle}</Text>
-    //     <Text style={styles.valueText}>{temperature}°C</Text>
-    //     <Text style={styles.valueText}>{luminosity} lux</Text>
-    //     <Text style={styles.valueText}>{humidity}%</Text>
-    //   </View>
-    // </TouchableOpacity>
-
   );
 };
 
@@ -88,7 +95,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     // marginRight: 25,
-    fontSize: 16,
+    fontSize: 12,
     // fontWeight: 'bold',
     fontFamily: 'Montserrat-Bold'
   },
@@ -98,7 +105,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat'
   },
   valuesContainer: {
-    marginRight: 5,
+    // marginRight: 5,
     flexDirection: 'row',
     alignItems: 'center',
     fontFamily: 'Montserrat'

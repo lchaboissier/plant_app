@@ -71,7 +71,13 @@ const SignUpScreen = () => {
                     placeholder="Adresse e-mail"
                     control={control}
                     style={styles.textInput}
-                    rules={{ required: "L'adresse électronique est obligatoire.", pattern: { value: EMAIL_REGEX, message: "Vous devez entrer une adresse électronique valide." } }}
+                    rules={{
+                        required: "L'adresse électronique est obligatoire.",
+                        pattern: {
+                            value: EMAIL_REGEX,
+                            message: "Vous devez entrer une adresse électronique valide."
+                        }
+                    }}
                     onChangeText={text => setEmail(text)}
                 />
 
@@ -137,6 +143,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat',
     },
     link: {
+        // marginTop: 2,
         color: '#7cb89e',
         fontFamily: 'Montserrat',
     },
