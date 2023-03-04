@@ -2,27 +2,43 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/database';
+import {auth, database} from '../../firebase';
+import useFetch from '../../hooks/useFetch';
 
-export const Plant = () => {
+export const Plant = ({ temperature, visibility, humidity }) => {
+  const [sensor, setSensor] = useState({
+    temperature: 0,
+    humidity: 0,
+    visibility: 0,
+    // infrared: 0,
+    // ultraviolet: 0,
+    // moisture: 0
+  });
+  const ips = database.ref('ips/' + auth.currentUser.uid);
+  let data;
+  ips.on('value', (snapshot) => {
+    data = snapshot.val();
+  })
 
-  const [temperature, setTemperature] = useState('');
-  const [luminosity, setLuminosity] = useState('');
-  const [humidity, setHumidity] = useState('');
+  const [loading, items] = useFetch('http://' + data?.address);
 
   useEffect(() => {
-    const userUid = firebase.auth().currentUser.uid;
-    const dbRef = firebase.database().ref('ips/' + userUid);
-    dbRef.on('value', (snapshot) => {
-      const val = snapshot.val();
-      setTemperature(val.temperature);
-      setLuminosity(val.luminosity);
-      setHumidity(val.humidity);
-    });
-  }, []);
+    if(!loading) {
+      let group = {};
+      items.forEach(item => {
+        group[item.type] = item;
+      });
 
+      setSensor((s) => ({...s,
+      temperature: parseFloat(group.temperature.value).toFixed(2),
+      humidity: group.humidity.value,
+      visibility: group.visibility.value,
+      // infrared: group.ir.value,
+      // ultraviolet: parseFloat(group.uv.value).toFixed(2),
+      // moisture: group.moisture.value,
+      }))
+    }
+  }, [loading]);
   const navigation = useNavigation();
 
   const onPlantInfoPress = () => {
@@ -41,19 +57,19 @@ export const Plant = () => {
         <View style={{ flexDirection: 'row', alignContent: 'center', alignItems: 'center' }}>
           <Image
             source={require('../../assets/icon.png')}
-            style={{ width: 50, height: 50, marginRight: 5 }}
+            style={{ width: 50, height: 50, }}
           />
-          <View style={{ marginRight: 20 }}>
+          <View style={{ marginRight: 5}}>
             <Text style={styles.titleText}>Plante</Text>
-            {/* <Text style={styles.subtitleText}>Connectée</Text> */}
+            {/* <Text style={styles.subtitleText}>{subtitle}</Text> */}
           </View>
         </View>
         <View style={styles.valuesContainer}>
-          <Text style={styles.valueText}>{temperature} °C</Text>
-          <Text style={styles.valueText}>{luminosity} lux</Text>
-          <Text style={styles.valueText}>{humidity} %</Text>
+          <Text style={styles.valueText}>{sensor.temperature} °C</Text>
+          <Text style={styles.valueText}>{sensor.visibility} lm</Text>
+          <Text style={styles.valueText}>{sensor.humidity} %</Text>
         </View>
-        <Ionicons name="ios-arrow-forward" style={{ marginRight: 7 }} size={24} color="#000" />
+        <Ionicons name="ios-arrow-forward" style={{ marginRight:15 }} size={24}  color="#000" />
 
         <TouchableOpacity style={styles.scrollButton} onPress={(onDetailsPress)}>
           <Ionicons name={showDetails ? 'ios-chevron-up' : 'ios-chevron-down'} size={24} color="#000" />
@@ -65,21 +81,32 @@ export const Plant = () => {
           <View styles={styles.row}>
             <Image style={styles.imageData} source={require('../../assets/temperature-icon.png')} />
             <Text style={styles.titleValue}>Température</Text>
-            <Text style={styles.value}>{temperature} °C</Text>
+            <Text style={styles.value}>{sensor.temperature} °C</Text>
           </View>
           <View styles={styles.row}>
             <Image style={styles.imageData} source={require('../../assets/light-icon.png')} />
             <Text style={styles.titleValue}>Luminosité</Text>
-            <Text style={styles.value}>{luminosity} lux</Text>
+            <Text style={styles.value}>{sensor.visibility} lux</Text>
           </View>
           <View styles={styles.row}>
             <Image style={styles.imageData} source={require('../../assets/humidity-icon.png')} />
             <Text style={styles.titleValue}>Humidité</Text>
-            <Text style={styles.value}>{humidity} %</Text>
+            <Text style={styles.value}>{sensor.humidity} %</Text>
           </View>
         </View>
       )}
     </TouchableOpacity>
+
+    // <TouchableOpacity onPress={(onPlantInfoPress)}>
+    //   <View>
+    //     <Text style={styles.titleText}>{title}</Text>
+    //     <Text style={styles.subtitleText}>{subtitle}</Text>
+    //     <Text style={styles.valueText}>{temperature}°C</Text>
+    //     <Text style={styles.valueText}>{luminosity} lux</Text>
+    //     <Text style={styles.valueText}>{humidity}%</Text>
+    //   </View>
+    // </TouchableOpacity>
+
   );
 };
 
@@ -94,7 +121,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat'
   },
   titleText: {
-    // marginRight: 25,
+    // marginRight: 10,
     fontSize: 12,
     // fontWeight: 'bold',
     fontFamily: 'Montserrat-Bold'

@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Plant } from '../../components/Plant/Plant';
 import { Help, handlePress } from '../../components/Help/Help';
 import { Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import firebase from 'firebase/app';
-import 'firebase/database';
+import firebase from "firebase/app";
 import "firebase/auth";
 import FlashMessage, { showMessage } from "react-native-flash-message";
 import { Ionicons } from '@expo/vector-icons';
 import ConnectPlant from '../ConnectPlant/ConnectPlant';
+import {auth, database} from '../../firebase';
+import useFetch from '../../hooks/useFetch';
 // import Icons from 'react-native-vector-icons/FontAwesome';
 // import { MenuContext, Menu, MenuOptions, MenuOption, MenuTrigger, MenuProvider } from 'react-native-popup-menu';
 
@@ -20,15 +21,8 @@ import ConnectPlant from '../ConnectPlant/ConnectPlant';
 const tab = createBottomTabNavigator();
 
 const HomeScreen = ({ navigation }) => {
-  const [plantData, setPlantData] = useState(null);
 
-  useEffect(() => {
-    const userUid = firebase.auth().currentUser.uid;
-    const database = firebase.database();
-    database.ref('ips/' + userUid).on('value', (snapshot) => {
-      setPlantData(snapshot.val());
-    });
-  }, []);
+ 
   
   const onSettingsPressed = () => {
     navigation.navigate('Settings');
@@ -138,7 +132,39 @@ const HomeScreen = ({ navigation }) => {
 
 
 function HomePage() {
+  const [sensor, setSensor] = useState({
+    temperature: 0,
+    humidity: 0,
+    visibility: 0,
+    infrared: 0,
+    ultraviolet: 0,
+    moisture: 0
+  });
+  const ips = database.ref('ips/' + auth.currentUser.uid);
+  let data;
+  ips.on('value', (snapshot) => {
+    data = snapshot.val();
+  })
 
+  const [loading, items] = useFetch('http://' + data?.address);
+
+  useEffect(() => {
+    if(!loading) {
+      let group = {};
+      items.forEach(item => {
+        group[item.type] = item;
+      });
+
+      setSensor((s) => ({...s,
+      temperature: parseFloat(group.temperature.value).toFixed(2),
+      humidity: group.humidity.value,
+      visibility: group.visibility.value,
+      infrared: group.ir.value,
+      ultraviolet: parseFloat(group.uv.value).toFixed(2),
+      moisture: group.moisture.value,
+      }))
+    }
+  }, [loading]);
   return (
     <View style={styles.container}>
       <FlashMessage position="top" />
@@ -148,15 +174,13 @@ function HomePage() {
       </View>
       <ScrollView style={{ width: '100%' }}>
         <View style={styles.box}>
-          {/* <Plant style={{ fontFamily: 'Montserrat' }}
-            title={'Title'}
-            subtitle={'Subtitle'}
-            temperature={21}
-            luminosity={278}
-            humidity={37}
+          <Plant style={{ fontFamily: 'Montserrat' }}
+            temperature={sensor.temperature}
+            luminosity={sensor.visibility}
+            humidity={sensor.humidity}
             icon={require('../../assets/icon.png')}
-            iconSize={48} /> */}
-            <Plant />
+            iconSize={48} />
+            {/* <Plant /> */}
         </View>
       </ScrollView>
     </View>

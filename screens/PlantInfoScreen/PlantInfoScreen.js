@@ -1,36 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text, Image, Button, ScrollView } from 'react-native';
 import Plant from '../../components/Plant/Plant';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons'
+import ConnectPlant from '../ConnectPlant/ConnectPlant';
+import {auth, database} from '../../firebase';
+import useFetch from '../../hooks/useFetch';
 
-import firebase from 'firebase/app';
-import 'firebase/database';
-import "firebase/auth";
+const PlantInfoScreen = ({ navigation }) => {
 
-const PlantInfoScreen = ({ navigation, route }) => {
-  const [temperature, setTemperature] = useState(null);
-  const [luminosity, setLuminosity] = useState(null);
-  const [humidity, setHumidity] = useState(null);
+  const [sensor, setSensor] = useState({
+    temperature: 0,
+    humidity: 0,
+    visibility: 0,
+    infrared: 0,
+    ultraviolet: 0,
+    moisture: 0
+  });
+  const ips = database.ref('ips/' + auth.currentUser.uid);
+  let data;
+  ips.on('value', (snapshot) => {
+    data = snapshot.val();
+  })
+
+  const [loading, items] = useFetch('http://' + data?.address);
 
   useEffect(() => {
-    const userUID = firebase.auth().currentUser.uid;
-    const plantRef = firebase.database().ref(`ips/${userUID}`);
+    if(!loading) {
+      let group = {};
+      items.forEach(item => {
+        group[item.type] = item;
+      });
 
-    // Récupère les données de la plante connectée
-    plantRef.on('value', (snapshot) => {
-      const plantData = snapshot.val();
-
-      // Met à jour les états avec les données de la plante connectée
-      setTemperature(plantData.temperature);
-      setLuminosity(plantData.luminosity);
-      setHumidity(plantData.humidity);
-    });
-
-    // Retourne une fonction de nettoyage pour arrêter l'écoute des changements dans la base de données
-    return () => {
-      plantRef.off('value');
-    };
-  }, []);
+      setSensor((s) => ({...s,
+      temperature: parseFloat(group.temperature.value).toFixed(2),
+      humidity: group.humidity.value,
+      visibility: group.visibility.value,
+      infrared: group.ir.value,
+      ultraviolet: parseFloat(group.uv.value).toFixed(2),
+      moisture: group.moisture.value,
+      }))
+    }
+  }, [loading]);
 
   return (
     <ScrollView>
@@ -44,24 +54,24 @@ const PlantInfoScreen = ({ navigation, route }) => {
         </View>
         <View style={styles.border} />
         <View style={styles.shadow} />
-        <Text style={styles.plantTitle}>Ma plante</Text>
+        <Text style={styles.plantTitle}>{Plant.title}</Text>
         <View style={styles.plantContainer}>
           <Image style={{ width: 162, height: 162, marginBottom: 20 }} source={require('../../assets/icon.png')} />
           <View style={styles.dataContainer}>
             <View styles={styles.row}>
               <Image style={styles.imageData} source={require('../../assets/temperature-icon.png')} />
               <Text style={styles.titleValue}>Température</Text>
-              <Text style={styles.value}>{temperature} °C</Text>
+              <Text style={styles.value}>{sensor.temperature} °C</Text>
             </View>
             <View styles={styles.row}>
               <Image style={styles.imageData} source={require('../../assets/light-icon.png')} />
               <Text style={styles.titleValue}>Luminosité</Text>
-              <Text style={styles.value}>{luminosity} lux</Text>
+              <Text style={styles.value}>{sensor.visibility} lm</Text>
             </View>
             <View styles={styles.row}>
               <Image style={styles.imageData} source={require('../../assets/humidity-icon.png')} />
               <Text style={styles.titleValue}>Humidité</Text>
-              <Text style={styles.value}>{humidity} %</Text>
+              <Text style={styles.value}>{sensor.humidity} %</Text>
             </View>
           </View>
         </View>

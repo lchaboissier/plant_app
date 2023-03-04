@@ -66,13 +66,10 @@ const ConnectPlant = ({}) => {
   function handleChange() {
     if (ip.length > 0) {
       const userUID = auth.currentUser.uid;
-      console.log(ip);
+      //console.log(ip);
       database.ref('ips/' + userUID).set({
         address: ip,
-        uid: userUID,
-        temperature: 20,
-        luminosity: 400,
-        humidity: 40
+        uid: userUID
       })
     }
   }
@@ -88,12 +85,12 @@ const ConnectPlant = ({}) => {
           >
           </TextInput>
           <TouchableOpacity style={styles.button} onPress={handleChange}>
-            <Text style={styles.buttonText}>Connect</Text>
+            <Text style={styles.buttonText}>Se Connecter</Text>
           </TouchableOpacity>
         </View>
       </View>
     </View>
   );
-}
+} 
 
 export default ConnectPlant;
